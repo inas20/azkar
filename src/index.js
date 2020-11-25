@@ -8,8 +8,8 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { MainStackNavigator } from "./navigation/mainNavigation";
 
-import HomeScreen from './screens/Home';
 import SettingsScreen from './screens/Settings';
 
 const Tab = createBottomTabNavigator();
@@ -46,7 +46,7 @@ const App = () => {
         }}
         
         >
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" component={MainStackNavigator} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
