@@ -1,6 +1,3 @@
-/* eslint-disable prettier/prettier */
-
-/* eslint-disable quotes */
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from './../screens/Home';
