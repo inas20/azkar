@@ -4,23 +4,25 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const ZekrCard = (props) => {
   const zekr = props.zekr;
-  const [zekrCount, setZekrCount] = useState(zekr.count);
+  const [zekrCount, setZekrCount] = useState(props.zekr.count==0? props.zekr.count : 1);
+  console.log('zekrCount---', zekrCount, props.zekr.count)
   
   const changeZekrCount =()=>{
-    if(zekrCount> 0){
+    if(zekrCount> 1){
       setZekrCount(zekrCount-1)
-    }else{
+    }else if(zekrCount==1){
       props.showZekr(zekr)
+      setZekrCount(props.zekr.count)
     }
   }
 
   return(
-  <TouchableOpacity style={styles.container} onPress={()=> changeZekrCount()}>
-    <View>
+  <View style={styles.container} >
+    <TouchableOpacity onPress={()=> changeZekrCount()}>
       <View style={styles.roundedContainer}>
         <Text style={{textAlign: 'center', padding:25, fontSize:22, flexWrap:'wrap'}}>{zekr?.zekr}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
     <View style={[styles.roundedContainer,{flexDirection: 'row', backgroundColor:'grey', padding: 15, justifyContent:'space-between'}]}>
       <TouchableOpacity style={{flexDirection:'row'}}>
         <Ionicons name="share-social" size={30} color={"#FFF"}/>
@@ -35,7 +37,7 @@ const ZekrCard = (props) => {
         <Text style={[styles.text,{paddingLeft:6}]}>التكرار</Text>
       </View>
     </View>
-  </TouchableOpacity>
+  </View>
   )
 };
 
@@ -47,6 +49,7 @@ const styles = StyleSheet.create({
     borderRadius:20,
     //justifyContent:'space-between',
     marginHorizontal:25,
+    marginVertical:15
    // flex: 1,
   },
   roundedContainer:{
