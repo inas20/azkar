@@ -4,8 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const ZekrCard = (props) => {
   const zekr = props.zekr;
-  const [zekrCount, setZekrCount] = useState(props.zekr.count==0? props.zekr.count : 1);
-  console.log('zekrCount---', zekrCount, props.zekr.count)
+  const [zekrCount, setZekrCount] = useState(props.zekr.count!=0? props.zekr.count : 1);
   
   const changeZekrCount =()=>{
     if(zekrCount> 1){
@@ -31,8 +30,8 @@ const ZekrCard = (props) => {
       {/* <View style={{width: 1, backgroundColor:'#fff'}}/> */}
       {/* <View style={{flex: 1}}/>  */}
       <View style={{flexDirection:'row'}}>
-        <View style={{borderRadius: 50, paddingHorizontal: 10, backgroundColor:'#fff'}}> 
-          <Text style={[styles.text,{color: '#000', fontWeight:'normal'}]}>{zekrCount}</Text>
+        <View style={{borderRadius: 30, paddingHorizontal: 10, backgroundColor:'#fff'}}> 
+          <Text style={[styles.text,{color: '#000', fontWeight:'normal', fontSize:20, textAlign:'center'}]}>{zekrCount}</Text>
         </View>
         <Text style={[styles.text,{paddingLeft:6}]}>التكرار</Text>
       </View>
