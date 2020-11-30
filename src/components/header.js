@@ -3,6 +3,7 @@
 
 import React from 'react';
 import {Header} from 'react-native-elements';
+import { colors } from '../constants/colors';
 
 export const AppHeader = (props) => (
   <Header
@@ -10,7 +11,7 @@ export const AppHeader = (props) => (
     leftComponent={{icon: 'chevron-left', color: '#fff', size: 35, style:{fontWeight:'bold'}}}
     rightComponent={{text: props.title, style: {color: '#fff', fontSize: 28 , fontWeight:'bold'}}}
     containerStyle={{
-        backgroundColor: '#3D6DCC',
+        backgroundColor: colors.primary,
       }}
   />
 );

@@ -1,14 +1,15 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from './../screens/Home';
-import AzkarScreen from './../screens/azkar';
+import AzkarScreen from './../screens/azkarScreen';
 import { AppHeader } from '../components/header';
+import { colors } from '../constants/colors';
 
 const Stack = createStackNavigator();
 
 const screenOptionStyle = {
   headerStyle: {
-    backgroundColor: "#9AC4F8",
+    backgroundColor: colors.primary,
   },
   headerTintColor: "white",
   headerBackTitle: "Back",
