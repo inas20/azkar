@@ -4,7 +4,7 @@ const colors={
   lightBlue:'#91aeed',
   lightRed:'#ffbaba',
   mediumRed:'#c41919',
-  primary: '#399D63',
+  primary: '#3D6DCC',
   secondary:'#FFF',
   text:'#0187B7',
   border:'#CFCFCF',
