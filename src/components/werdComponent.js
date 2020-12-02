@@ -5,7 +5,7 @@ import { colors } from '../constants/colors';
  
 export const WerdCard =(props)=>{
     return (
-        <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Azkar')}>
+        <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Azkar',{title: props.title})}>
             <Text style={{color:'#FFF', padding: 15, fontSize:20}}>اذكار {props.title} </Text>
         </TouchableOpacity>
     )

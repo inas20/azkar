@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
 import { ZekrCard } from '../components/zekrComponent';
 import AZKAR from '../DataSet/azkar.json';
@@ -8,13 +8,15 @@ export default class AzkarScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      azkar: [],
+      azkar: []
     }
   }
 
   componentDidMount(){
     this.setupData()
+   // this.props.navigation.setOptions({ title: this.props.navigation.route.params.title })
   }
+  
 
   setupData=()=>{
     let azkar = AZKAR;
@@ -42,8 +44,6 @@ export default class AzkarScreen extends React.Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Azkar!</Text>
-          
         {this.state.azkar.length>0 &&<FlatList
           data={this.state.azkar}
           renderItem={this.renderZekrItem}

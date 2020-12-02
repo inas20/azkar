@@ -4,45 +4,21 @@ import { v4 as uuidv4 } from 'uuid';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import { WerdCard } from '../components/werdComponent';
-import {ZekrCard}  from '../components/zekrComponent';
-import AZKAR from '../DataSet/azkar.json';
 import { HomeCard } from '../components/homeCard';
 
 const{height, width}= Dimensions.get('window')
 
 export default class HomeScreen extends React.Component {
+
+  static navigationOptions = ({navigation}) => {
+    return ({
+      headerLeft: (<Text>أذكار المسلم</Text>),
+      headerRight: null,
+      headerTitle:"أذكار المسلم"
+    })
+  }
   constructor(props) {
     super(props)
-    this.state={
-      azkar: [],
-    }
-  }
-
-  componentDidMount(){
-    this.setupData()
-  }
-
-  setupData=()=>{
-    let azkar = AZKAR;
-    azkar.forEach(zekr=>{
-      zekr.id= uuidv4()
-    },this.setState({azkar: azkar}))
-  }
-
-
-  showZekr =(item)=>{
-    let newAzkar= this.state.azkar.slice();
-    let filtered = []
-    filtered= newAzkar.filter(zekr=>zekr.id !=item.id) 
-    this.setState({azkar: filtered})
-  }
-
-
-
-  renderZekrItem=({item})=>{
-    return(
-      <ZekrCard zekr={item}  showZekr={(item)=> this.showZekr(item)}/>
-    )
   }
 
   render() {
