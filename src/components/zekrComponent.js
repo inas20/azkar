@@ -27,8 +27,6 @@ const ZekrCard = (props) => {
         <Ionicons name="share-social" size={30} color={"#FFF"}/>
         <Text style={[styles.text,{paddingLeft:6}]}>المشاركة</Text>
       </TouchableOpacity>
-      {/* <View style={{width: 1, backgroundColor:'#fff'}}/> */}
-      {/* <View style={{flex: 1}}/>  */}
       <View style={{flexDirection:'row'}}>
         <View style={{borderRadius: 30, paddingHorizontal: 10, backgroundColor:'#fff'}}> 
           <Text style={[styles.text,{color: '#000', fontWeight:'normal', fontSize:20, textAlign:'center'}]}>{zekrCount}</Text>
@@ -46,10 +44,8 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFF',
     borderColor:'red',
     borderRadius:20,
-    //justifyContent:'space-between',
     marginHorizontal:25,
     marginVertical:15
-   // flex: 1,
   },
   roundedContainer:{
     borderRadius:30,
