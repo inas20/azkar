@@ -2,7 +2,6 @@ import React from 'react';
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { MainStackNavigator, QuraanStackNavigator } from "./StackNavigator";
 import SettingsScreen from '../screens/Settings';

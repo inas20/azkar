@@ -4,7 +4,6 @@ import HomeScreen from '../screens/Home';
 import AzkarScreen from '../screens/azkarScreen';
 import QuraanScreen from '../screens/quraan';
 
-import { AppHeader } from '../components/header';
 import { colors } from '../constants/colors';
 
 const Stack = createStackNavigator();
