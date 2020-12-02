@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {Share, View, StyleSheet, FlatList} from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
 import { ZekrCard } from '../components/zekrComponent';
 import AZKAR from '../DataSet/azkar.json';
@@ -14,7 +14,6 @@ export default class AzkarScreen extends React.Component {
 
   componentDidMount(){
     this.setupData()
-   // this.props.navigation.setOptions({ title: this.props.navigation.route.params.title })
   }
   
 
@@ -33,11 +32,31 @@ export default class AzkarScreen extends React.Component {
     this.setState({azkar: filtered})
   }
 
+  onShareZekr = async (item) => {
+    try {
+      const result = await Share.share({
+        message:item.zekr +'\n' + 'تطبيق_أذكار\n'
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  
 
 
   renderZekrItem=({item})=>{
     return(
-      <ZekrCard zekr={item}  showZekr={(item)=> this.showZekr(item)}/>
+      <ZekrCard zekr={item}  showZekr={(item)=> this.showZekr(item)} shareZekr={()=> this.onShareZekr(item)}/>
     )
   }
 
