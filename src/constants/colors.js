@@ -1,7 +1,7 @@
 const tintColor = '#2f95dc';
 const colors={
   darkBlue:'#002470',
-  lightBlue:'#91aeed',
+  lightBlue:'#2a66e8',
   lightRed:'#ffbaba',
   mediumRed:'#c41919',
   primary: '#3D6DCC',
