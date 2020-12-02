@@ -23,7 +23,7 @@ const ZekrCard = (props) => {
       </View>
     </TouchableOpacity>
     <View style={[styles.roundedContainer,{flexDirection: 'row', backgroundColor:'grey', padding: 15, justifyContent:'space-between'}]}>
-      <TouchableOpacity style={{flexDirection:'row'}}>
+      <TouchableOpacity style={{flexDirection:'row'}} onPress={props.shareZekr}>
         <Ionicons name="share-social" size={30} color={"#FFF"}/>
         <Text style={[styles.text,{paddingLeft:6}]}>المشاركة</Text>
       </TouchableOpacity>
