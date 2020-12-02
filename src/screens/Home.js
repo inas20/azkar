@@ -8,6 +8,14 @@ import { HomeCard } from '../components/homeCard';
 const{height, width}= Dimensions.get('window')
 
 export default class HomeScreen extends React.Component {
+  static navigationOptions = ({navigation}) => {
+    return ({
+      headerLeft: (<Text>أذكار المسلم</Text>),
+      headerRight: null,
+      headerTitle:"أذكار المسلم"
+    })
+  }
+
   constructor(props) {
     super(props)
   }
