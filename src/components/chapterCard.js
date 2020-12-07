@@ -7,20 +7,18 @@ const{height, width}= Dimensions.get('window')
 export const ChapterCard =(props)=>{
     const chapter= props.chapter
     return(
-        <TouchableOpacity onPress={()=>{}} style={styles.container}>
+        <TouchableOpacity onPress={()=>{props.openChapter(chapter?.chapter_number)}} style={styles.container}>
             <View style={{margin: 5, justifyContent:'center', alignItems:'center', flexDirection:'row'}}>
                 <Text style={{fontSize:12}}>{chapter.chapter_number}. </Text>
                 <View style={{marginLeft:12}}>
                     <Text style={{color : colors.lightBlue}}>{chapter.name_simple} ( {chapter.verses_count}: عدد الايات) </Text>
                     <Text style={{flexWrap:'wrap'}}>{chapter.name_complex} (Verses: {chapter.verses_count})</Text>
                 </View>
-               
             </View>
             <View style={{margin: 5,}}>
                 <Text style={styles.chapterName}>{chapter.name_arabic}</Text>
             </View>
         </TouchableOpacity>
-
     )
 }
 
