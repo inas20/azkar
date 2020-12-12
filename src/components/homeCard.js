@@ -20,7 +20,7 @@ export const HomeCard =(props)=>{
 const styles= StyleSheet.create({
     container:{
         borderRadius:25, 
-        backgroundColor: colors.noticeText, 
+        backgroundColor: colors.white, 
         margin:15,
         elevation: 8,
         shadowOpacity: 0.3,
@@ -31,7 +31,7 @@ const styles= StyleSheet.create({
         borderRadius: 50, 
         paddingHorizontal: 10, 
         paddingVertical:10,
-        backgroundColor:'#fff',
+        backgroundColor:colors.white,
         elevation: 8,
         shadowOpacity: 0.3,
         shadowRadius: 50,
