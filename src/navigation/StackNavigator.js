@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from '../screens/Home';
 import AzkarScreen from '../screens/AzkarScreen';
-import QuraanScreen from '../screens/Quraan';
+import QuraanScreen from '../screens/QuraanScreen';
 
 import { colors } from '../constants/colors';
 import QuranDisplayScreen from '../screens/QuranDisplayScreen';

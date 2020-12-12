@@ -110,7 +110,8 @@ const styles=StyleSheet.create({
         fontSize:20, 
         lineHeight:25, 
         textAlign:"center", 
-        fontWeight:"bold",
+        //fontWeight:"bold",
+        fontFamily: FontType.bold,
         marginVertical:15, 
         color:colors.primary
     }
