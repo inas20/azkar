@@ -1,58 +1,36 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable quotes */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable no-unused-vars */
+import React from 'react'
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
 
-import 'react-native-gesture-handler';
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import BottomTabNavigator from './navigation/TabNavigator';
+import {persistStore, persistReducer} from 'redux-persist';
+import {PersistGate} from 'redux-persist/es/integration/react';
+import thunk from 'redux-thunk';
+import AsyncStorage from '@react-native-community/async-storage';
 
-const App = () => {
-  return (
+import AppNavigator from './navigation/AppNavigator';
+import { rootReducer } from './redux/reducers/rootReducer';
 
-    <NavigationContainer>
-      <BottomTabNavigator />
-    </NavigationContainer>
-  );
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
 };
 
-export default App;
+let persistedReducer = persistReducer(persistConfig, rootReducer);
+
+let store = createStore(persistedReducer, applyMiddleware(thunk));
+let persistor = persistStore(store);
 
 
-{/* <NavigationContainer>
-     
-<Tab.Navigator 
+class Root extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <AppNavigator />
+        </PersistGate>
+      </Provider>
+    )
+  }
+}
 
- screenOptions={({ route }) => ({
-    tabBarIcon: ({ focused, color, size }) => {
-      let iconName;
-
-      if (route.name === 'Home') {
-        iconName = focused
-          ? 'home'
-          : 'home-outline';
-      } else if (route.name === 'Settings') {
-        iconName = focused ? 'settings' : 'settings-outline';
-      }
-
-      // You can return any component that you like here!
-      return <Ionicons name={iconName} size={size} color={color} />;
-    },
-    headerStyle: {
-      backgroundColor: "#9AC4F8",
-    },
-    headerTintColor: "white",
-    headerBackTitle: "Back",
-  })}
-  tabBarOptions={{
-    activeTintColor: 'tomato',
-    inactiveTintColor: 'gray',
-  }}
-  
-  >
-  <Tab.Screen name="Home" component={MainStackNavigator} />
-  <Tab.Screen name="Settings" component={SettingsScreen} />
-</Tab.Navigator>
-</NavigationContainer> */}
+export default Root

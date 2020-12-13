@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {RefreshControl, View, FlatList} from 'react-native';
-import { getChapterVerses, getVerseTafsir } from '../api/quranApi';
+import { getChapterVerses, getVerseTafsir } from '../redux/actions/quranApi';
 import { AyahComponent } from '../components/ayahComponent';
 import { colors } from '../constants/colors';
 

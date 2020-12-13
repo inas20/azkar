@@ -1,12 +1,18 @@
-export const getChapters = async()=>{
-    try {
+
+export const getChapters = ()=>{
+    return async(dispatch) =>{
+        try {
             const url ='http://api.quran.com/api/v3/chapters';
             const req = await fetch(url)
             const chapters = await req.json()
-            return chapters;
-    }catch(error){
-        alert('حدث خطأ!!!!!', error)
-        return []
+            if(chapters && chapters.chapters.length >0){
+                return dispatch(saveChapters(chapters.chapters));
+            }
+           
+        }catch(error){
+            alert('حدث خطأ!!!!!', error)
+            return []
+        }
     }
 }
 
@@ -54,5 +60,12 @@ export const getVerseTafsir = async(chapterNum, verseNum)=>{
     }catch(error){
         alert('حدث خطأ!!!!!'+ error)
         return;
+    }
+}
+
+export const saveChapters =(chapters)=>{
+    return {
+        type :'GET_QURAN_CHAPTERS',
+        chapters: chapters
     }
 }
