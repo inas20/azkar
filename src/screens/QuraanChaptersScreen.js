@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {Text, View, FlatList} from 'react-native';
-import { getChapters } from '../api/quranApi';
+import { connect } from 'react-redux';
+import { getChapters } from '../redux/actions/quranApi';
 import { ChapterCard } from '../components/chapterCard';
 
 
-export default class QuraanScreen extends React.Component {
+class QuraanChaptersScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state={
@@ -13,7 +14,8 @@ export default class QuraanScreen extends React.Component {
   }
 
   componentDidMount(){
-    getChapters().then(res=>{
+    this.props.onGetChapters().then(res=>{
+      console.log("res---", res)
       if(!!res.chapters && res.chapters.length>0){
         this.setState({chapters: res.chapters})
       }
@@ -41,3 +43,19 @@ export default class QuraanScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return{
+      //qurchapters : state.todos.todos,
+
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetChapters: () => dispatch(getChapters()),
+     
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuraanChaptersScreen);

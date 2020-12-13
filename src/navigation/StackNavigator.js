@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
+
 import HomeScreen from '../screens/Home';
 import AzkarScreen from '../screens/AzkarScreen';
-import QuraanScreen from '../screens/QuraanScreen';
-
-import { colors } from '../constants/colors';
+import QuraanChaptersScreen from '../screens/QuraanChaptersScreen';
 import QuranDisplayScreen from '../screens/QuranDisplayScreen';
+import { colors } from '../constants/colors';
 
 const Stack = createStackNavigator();
 
@@ -43,7 +43,7 @@ const MainStackNavigator = () => {
   const QuraanStackNavigator = () => {
     return (
       <Stack.Navigator screenOptions={screenOptionStyle}>
-        <Stack.Screen name="Quraan" component={QuraanScreen}  
+        <Stack.Screen name="Quraan" component={QuraanChaptersScreen}  
           options={{ title: "القران الكريم" }}  />
         <Stack.Screen 
           name="Ayat" 
