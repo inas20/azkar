@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { RefreshControl, View, FlatList} from 'react-native';
-import { getChapterVerses, getVerseTafsir } from '../redux/actions/quranApi';
+import { RefreshControl, View, FlatList, ActivityIndicator} from 'react-native';
+import { getChapterVerses, getVerseTafsir } from '../redux/actions/index';
 import { AyahComponent } from '../components/ayahComponent';
 import { colors } from '../constants/colors';
 import { connect } from 'react-redux';
@@ -54,7 +54,7 @@ class ChapterVersesScreen extends React.Component {
 
   renderVerse=({item})=>{
     return(
-      <AyahComponent ayah={item} getTafsir={()=> getVerseTafsir(this.state.chapter_number, item.verseNum)}/>
+      <AyahComponent ayah={item} getTafsir={()=> this.props.onGetVerseTafsir(this.state.chapter_number, item.verseNum)}/>
     )
   }
 
@@ -81,8 +81,8 @@ class ChapterVersesScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, borderColor:colors.grey, borderStyle:'dotted',borderWidth:2}}>
-        {this.state.ayat.length>0 && <FlatList
+      <View style={{ borderColor:colors.grey, borderStyle:'dotted',borderWidth:2}}>
+        {this.state.ayat.length>0 ? <FlatList
           ref={(ref) => { this.flatListRef = ref; }}
           // refreshControl={
           //   <RefreshControl
@@ -101,7 +101,11 @@ class ChapterVersesScreen extends React.Component {
           onEndReachedThreshold={0.3}
           scrollsToTop={true}    
           onEndReached={()=> this.setState({isScrolledMore: true},()=> this.handleMoreVerses())}
-        />}
+        />: <View style={{justifyContent:'center'}}>
+              <ActivityIndicator
+                color= {colors.primary}
+                style={{marginLeft: 8}} />
+        </View> }
       </View>
     );
   }
@@ -111,13 +115,14 @@ const mapStateToProps = (state) => {
   return{
       chapterVeres : state.quran.veres,
 
+
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
       onGetChapterVeres: (chapterNum, offset, page) => dispatch(getChapterVerses(chapterNum, offset, page)),
-     
+      onGetVerseTafsir:(chapterNum, verseNum) => dispatch(getVerseTafsir(chapterNum, verseNum))
   };
 };
 
