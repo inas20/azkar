@@ -37,8 +37,8 @@ class QuraanChaptersScreen extends React.Component {
           keyExtractor = { (item,index) => index.toString()}
           extraData= {this.state.chapters}
         />}
-        {this.state.chapters.length == 0 || this.props.isLoading && <View style={{flex: 1, alignItems:"center"}}>
-            <Text>القران!</Text>
+        {this.state.chapters.length == 0 && <View>
+            <Text style={{fontSize:25}}> تحميل اّيات القران الكريم</Text>
             <ActivityIndicator
               color= {colors.primary}
               style={{marginLeft: 8}} />
