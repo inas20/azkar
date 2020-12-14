@@ -15,7 +15,6 @@ class QuraanChaptersScreen extends React.Component {
 
   componentDidMount(){
     this.props.onGetChapters().then(res=>{
-      console.log("res---", res)
       if(!!res.chapters && res.chapters.length>0){
         this.setState({chapters: res.chapters})
       }
