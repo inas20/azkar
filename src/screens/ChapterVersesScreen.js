@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RefreshControl, View, FlatList} from 'react-native';
-import { getChapterVerses, getVerseTafsir } from '../redux/actions/quranApi';
+import { getChapterVerses, getVerseTafsir } from '../redux/actions/index';
 import { AyahComponent } from '../components/ayahComponent';
 import { colors } from '../constants/colors';
 import { connect } from 'react-redux';
@@ -54,7 +54,7 @@ class ChapterVersesScreen extends React.Component {
 
   renderVerse=({item})=>{
     return(
-      <AyahComponent ayah={item} getTafsir={()=> getVerseTafsir(this.state.chapter_number, item.verseNum)}/>
+      <AyahComponent ayah={item} getTafsir={()=> this.props.onGetVerseTafsir(this.state.chapter_number, item.verseNum)}/>
     )
   }
 
@@ -111,13 +111,14 @@ const mapStateToProps = (state) => {
   return{
       chapterVeres : state.quran.veres,
 
+
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
       onGetChapterVeres: (chapterNum, offset, page) => dispatch(getChapterVerses(chapterNum, offset, page)),
-     
+      onGetVerseTafsir:(chapterNum, verseNum) => dispatch(getVerseTafsir(chapterNum, verseNum))
   };
 };
 

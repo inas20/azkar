@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Text, View, FlatList} from 'react-native';
+import {Text, View, FlatList, ActivityIndicator} from 'react-native';
 import { connect } from 'react-redux';
-import { getChapters } from '../redux/actions/quranApi';
+import { getChapters } from '../redux/actions/index';
 import { ChapterCard } from '../components/chapterCard';
+import { colors } from '../constants/colors';
 
 
 class QuraanChaptersScreen extends React.Component {
@@ -30,14 +31,19 @@ class QuraanChaptersScreen extends React.Component {
   render() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        
         {this.state.chapters.length>0 &&<FlatList
           data={this.state.chapters}
           renderItem={this.renderChapterCard}
           keyExtractor = { (item,index) => index.toString()}
           extraData= {this.state.chapters}
         />}
-        {this.state.chapters.length==0 && <Text>القران!</Text>}
+        {this.state.chapters.length == 0 || this.props.isLoading && <View style={{flex: 1, alignItems:"center"}}>
+            <Text>القران!</Text>
+            <ActivityIndicator
+              color= {colors.primary}
+              style={{marginLeft: 8}} />
+          </View>
+          }
       </View>
     );
   }
@@ -45,8 +51,7 @@ class QuraanChaptersScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return{
-      //qurchapters : state.todos.todos,
-
+    isLoading: state.ui.isLoading
   }
 };
 
