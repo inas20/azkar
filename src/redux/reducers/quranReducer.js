@@ -13,14 +13,19 @@ export default quranReducer = (state = INITIAL_STATE, action) => {
             chapters: action.chapters
             }
         case GET_CHAPTER_VERSES:
-            const {
-                verses,
-            } = state;
-            verses.push(action.verses);
-            // Finally, update the redux state
-            const newState = { verses };
+            return{
+                ...state,
+                verses: [...state.verses, ...action.verses]
+            }
+           
+            // const {
+            //     verses,
+            // } = state;
+            // verses.push(action.verses);
+            // // Finally, update the redux state
+            // const newState = { verses };
         
-            return newState;
+            //return newState;
         default:
             return state
     }

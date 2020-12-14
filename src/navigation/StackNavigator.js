@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from '../screens/Home';
 import AzkarScreen from '../screens/AzkarScreen';
 import QuraanChaptersScreen from '../screens/QuraanChaptersScreen';
-import QuranDisplayScreen from '../screens/QuranDisplayScreen';
+import QuranDisplayScreen from '../screens/ChapterVersesScreen';
 import { colors } from '../constants/colors';
 
 const Stack = createStackNavigator();

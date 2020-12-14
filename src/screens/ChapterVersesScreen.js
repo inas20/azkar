@@ -1,10 +1,11 @@
 import * as React from 'react';
-import {RefreshControl, View, FlatList} from 'react-native';
+import { RefreshControl, View, FlatList} from 'react-native';
 import { getChapterVerses, getVerseTafsir } from '../redux/actions/quranApi';
 import { AyahComponent } from '../components/ayahComponent';
 import { colors } from '../constants/colors';
+import { connect } from 'react-redux';
 
-export default class QuranDisplayScreen extends React.Component {
+class ChapterVersesScreen extends React.Component {
   constructor(props) {
     super(props)
    this.state={
@@ -22,7 +23,6 @@ export default class QuranDisplayScreen extends React.Component {
   }
 
   handleMoreVerses=()=>{
-    console.log("isScrolledMore----", this.state.isScrolledMore)
     this.setState({refreshing: true})
     if(this.state.isScrolledMore){
       this.setState(prevState=>{
@@ -30,15 +30,22 @@ export default class QuranDisplayScreen extends React.Component {
           offset : prevState.offset +10,
           page :prevState.page +1
         }
-      }, this.loadChapterVerses())
+      },()=>{
+        //this.flatListRef?.scrollToOffset({ animated: false, offset: this.state.offset-1 })
+        this.loadChapterVerses()
+      } )
     }
   }
 
   loadChapterVerses =()=>{
-    getChapterVerses(this.state.chapter_number, this.state.offset,this.state.page).then(quran=>{
+    this.props.onGetChapterVeres(this.state.chapter_number, this.state.offset,this.state.page).then(quran=>{
       this.setState({refreshing: false})
-      if(!!quran && quran.length>0){
-        this.setState({ayat: quran})
+      if(!!quran && quran.verses && quran.verses.length>0){
+        this.setState(prevState=>{
+          return{
+            ayat : [...prevState.ayat, ...quran.verses]
+          }
+        })
       }
     })
   }
@@ -71,29 +78,47 @@ export default class QuranDisplayScreen extends React.Component {
     );
   };
 
+
   render() {
     return (
       <View style={{flex: 1, borderColor:colors.grey, borderStyle:'dotted',borderWidth:2}}>
         {this.state.ayat.length>0 && <FlatList
-          refreshControl={
-            <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={() => {
-                    this.loadChapterVerses();
-                }}
-                tintColor={colors.primary}
-            />
-        }
+          ref={(ref) => { this.flatListRef = ref; }}
+          // refreshControl={
+          //   <RefreshControl
+          //       refreshing={this.state.refreshing}
+          //       onRefresh={() => {
+          //           //this.loadChapterVerses();
+          //       }}
+          //       tintColor={colors.primary}
+          //   />
+          // }
           refreshing={this.state.refreshing}
           data={this.state.ayat}
           renderItem={this.renderVerse}
           keyExtractor = { (item,index) => index.toString()}
           extraData= {this.state.ayat}
           onEndReachedThreshold={0.3}
-          scrollsToTop
+          scrollsToTop={true}    
           onEndReached={()=> this.setState({isScrolledMore: true},()=> this.handleMoreVerses())}
         />}
       </View>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return{
+      chapterVeres : state.quran.veres,
+
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetChapterVeres: (chapterNum, offset, page) => dispatch(getChapterVerses(chapterNum, offset, page)),
+     
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChapterVersesScreen);
