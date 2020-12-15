@@ -24,7 +24,13 @@ class QuraanChaptersScreen extends React.Component {
 
   renderChapterCard=({item})=>{
     return(
-      <ChapterCard chapter={item} openChapter={()=> this.props.navigation.navigate("Ayat",{chapter_number: item.chapter_number, title: item.name_complex})}/>
+      <ChapterCard 
+        chapter={item} 
+        openChapter={()=> this.props.navigation.navigate("Ayat",{
+          chapter_number: item.chapter_number, 
+          title: item.name_complex,
+          
+        })}/>
     )
   }
 
@@ -38,7 +44,7 @@ class QuraanChaptersScreen extends React.Component {
           extraData= {this.state.chapters}
         />}
         {this.state.chapters.length == 0 && <View>
-            <Text style={{fontSize:25}}> تحميل اّيات القران الكريم</Text>
+            <Text style={{fontSize:25}}> تحميل سور القران الكريم</Text>
             <ActivityIndicator
               color= {colors.primary}
               style={{marginLeft: 8}} />

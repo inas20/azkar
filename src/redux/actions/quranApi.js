@@ -43,8 +43,7 @@ export const getChapterVerses = (chapterNum, offset , page)=>{
                             text: verse.text_madani,
                             sajdah: verse.sajdah,
                             juzNum: verse.juz_number,
-                            code: verse.code,
-                            covdeV3: verse.code_v3
+                           
 
                         })
                      })

@@ -14,7 +14,8 @@ class ChapterVersesScreen extends React.Component {
     offset:0,
     page:1,
     isScrolledMore :false,
-    refreshing: false
+    refreshing: false,
+    tafsers:[],
    }
   }
 
@@ -51,10 +52,14 @@ class ChapterVersesScreen extends React.Component {
   }
 
 
-
   renderVerse=({item})=>{
     return(
-      <AyahComponent ayah={item} getTafsir={()=> this.props.onGetVerseTafsir(this.state.chapter_number, item.verseNum)}/>
+      <AyahComponent 
+        ayah= {item}  
+        navigation={this.props.navigation}
+        getTafsir= {()=> this.props.onGetVerseTafsir(this.state.chapter_number, item.verseNum)}
+      
+      />
     )
   }
 
@@ -81,7 +86,7 @@ class ChapterVersesScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ borderColor:colors.grey, borderStyle:'dotted',borderWidth:2}}>
+      <View>
         {this.state.ayat.length>0 ? <FlatList
           ref={(ref) => { this.flatListRef = ref; }}
           // refreshControl={
@@ -100,6 +105,7 @@ class ChapterVersesScreen extends React.Component {
           extraData= {this.state.ayat}
           onEndReachedThreshold={0.3}
           scrollsToTop={true}    
+          style={{marginBottom:15}}
           onEndReached={()=> this.setState({isScrolledMore: true},()=> this.handleMoreVerses())}
         />: <View style={{justifyContent:'center'}}>
               <ActivityIndicator
