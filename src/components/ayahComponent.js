@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
 
 import { colors } from '../constants/colors';
@@ -11,25 +12,22 @@ export const AyahComponent =(props)=>{
     const [tafsirs,setTafsirs] = useState([]);
     const handlePress = () => {
         if(!expanded){
-            let tafsers = []
              props.getTafsir().then(res=>{
                 setTafsirs(res)
              })
-            setTafsirs(tafsers)
+            //setTafsirs(tafsirs)
         }
         setExpanded(!expanded);
     };
-
   
     return(
-        <TouchableOpacity style={styles.container} onPress= {handlePress}>
+        <TouchableNativeFeedback style={styles.container} onPress= {handlePress}>
             <View style={styles.cardStyle}>
                 <View style={styles.cardContainer}>
                     <MaterialIcons name="keyboard-arrow-left" size={45} style={{paddingTop:15}} color={colors.lightBlue}/>
                     <View style={styles.ayahContainer}>
                         <Text style={styles.text}>
                             {ayah.text} 
-                            <Text>{ayah.codeV3}</Text>
                             {ayah.sajdah && <Text style={[styles.text, {paddingRight:3}]}>&#x6e9;</Text>}
                         </Text>
                     </View>
@@ -37,16 +35,20 @@ export const AyahComponent =(props)=>{
                         <Text style={styles.ayahNum}>{ayah.verseNum}</Text>
                     </View>
                 </View>
-         
             </View>
-        </TouchableOpacity>
+            {expanded && 
+                <TouchableOpacity 
+                    onPress={()=> props.navigation.navigate("Tafsers", {tafsirs: tafsirs, verse: ayah, title: "  تفسير اّية رقم "+ ayah.verseNum })}
+                    style={{borderColor:colors.grey, borderWidth:1,height: 'auto', marginHorizontal:6}}>
+                    <Text style={styles.tafserTitle}>{tafsirs[0]?.resourceName}</Text>
+                    <Text numberOfLines={5} ellipsizeMode= 'tail' style={{fontSize:15, lineHeight:25, paddingHorizontal:10, }}>{tafsirs[0]?.tafsir}</Text>
+                </TouchableOpacity>}
+        </TouchableNativeFeedback>
     )
 }
 
 const styles=StyleSheet.create({
     containter:{
-
-        //margin:5
     },
     cardStyle: {
         height: 'auto',
@@ -59,8 +61,6 @@ const styles=StyleSheet.create({
       },
     ayahContainer:{
         flex: 3,
-        //flexDirection: 'row',
-        // justifyContent: 'center',
     },
     ayahNumContainer:{
         height: 45,
@@ -95,7 +95,6 @@ const styles=StyleSheet.create({
         fontSize:20,
         lineHeight:25,
         textAlign:"center",
-        //fontWeight:"bold",
         fontFamily: FontType.bold,
         marginVertical:15,
         color:colors.primary
