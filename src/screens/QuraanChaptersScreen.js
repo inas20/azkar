@@ -27,9 +27,8 @@ class QuraanChaptersScreen extends React.Component {
       <ChapterCard 
         chapter={item} 
         openChapter={()=> this.props.navigation.navigate("Ayat",{
-          chapter_number: item.chapter_number, 
-          title: item.name_complex,
-          
+          chapter: item,
+          title: item.name_arabic
         })}/>
     )
   }

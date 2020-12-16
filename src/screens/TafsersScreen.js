@@ -22,11 +22,12 @@ class TafsersScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontFamily: FontType.arabic, fontSize:25, textAlign:'center'}}>"  {this.state.verse.text}  "</Text>
-        {this.state.tafsers.length > 0 ?<FlatList
+      <View style={{marginBottom:15, paddingBottom:15}}>
+        <Text style={{fontFamily: FontType.arabic, fontSize:25, textAlign:'center', paddingHorizontal:7}}>&#xfd3f; {this.state.verse.text} &#xfd3e;</Text>
+        {this.state.tafsers.length > 0 ? <FlatList
             data={this.state.tafsers}
             renderItem={this.renderTafserCard}
+            style={{marginBottom:15, paddingBottom:15}}
         />: <Text style={{fontFamily: FontType.arabic, fontSize:30, textAlign: 'center'}}>لا يوجد تفسيرات متاحة</Text>}
       </View>
     );

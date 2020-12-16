@@ -7,27 +7,19 @@ import { colors } from '../constants/colors';
 import { FontType } from '../constants/fonts';
 
 export const AyahComponent =(props)=>{
-    const ayah = props.ayah;
-    const [expanded, setExpanded] = useState(false);
-    const [tafsirs,setTafsirs] = useState([]);
-    const handlePress = () => {
-        if(!expanded){
-             props.getTafsir().then(res=>{
-                setTafsirs(res)
-             })
-            //setTafsirs(tafsirs)
-        }
-        setExpanded(!expanded);
-    };
-  
+    const ayah = props.ayah;  
     return(
-        <TouchableNativeFeedback style={styles.container} onPress= {handlePress}>
+        <TouchableNativeFeedback 
+            style={styles.container} 
+            onPress={()=> props.getTafsers()}
+            >
             <View style={styles.cardStyle}>
                 <View style={styles.cardContainer}>
                     <MaterialIcons name="keyboard-arrow-left" size={45} style={{paddingTop:15}} color={colors.lightBlue}/>
                     <View style={styles.ayahContainer}>
                         <Text style={styles.text}>
                             {ayah.text} 
+                            <Text>&#x6dd;</Text>
                             {ayah.sajdah && <Text style={[styles.text, {paddingRight:3}]}>&#x6e9;</Text>}
                         </Text>
                     </View>
@@ -36,13 +28,6 @@ export const AyahComponent =(props)=>{
                     </View>
                 </View>
             </View>
-            {expanded && 
-                <TouchableOpacity 
-                    onPress={()=> props.navigation.navigate("Tafsers", {tafsirs: tafsirs, verse: ayah, title: "  تفسير اّية رقم "+ ayah.verseNum })}
-                    style={{borderColor:colors.grey, borderWidth:1,height: 'auto', marginHorizontal:6}}>
-                    <Text style={styles.tafserTitle}>{tafsirs[0]?.resourceName}</Text>
-                    <Text numberOfLines={5} ellipsizeMode= 'tail' style={{fontSize:15, lineHeight:25, paddingHorizontal:10, }}>{tafsirs[0]?.tafsir}</Text>
-                </TouchableOpacity>}
         </TouchableNativeFeedback>
     )
 }
