@@ -92,7 +92,7 @@ class ChapterVersesScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{flex:1}}>
         {this.state.chapter.bismillah_pre && <Text style={styles.bismiallahStyle}>&#xfd3f; بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ &#xfd3e;</Text>}
         {this.state.ayat.length>0 ? <FlatList
           ref={(ref) => { this.flatListRef = ref; }}
