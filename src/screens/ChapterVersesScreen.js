@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { RefreshControl, View, FlatList, ActivityIndicator} from 'react-native';
+import { Text, View, FlatList, ActivityIndicator, StyleSheet} from 'react-native';
 import { getChapterVerses, getVerseTafsir } from '../redux/actions/index';
 import { AyahComponent } from '../components/ayahComponent';
 import { colors } from '../constants/colors';
 import { connect } from 'react-redux';
+import { FontType } from '../constants/fonts';
 
 class ChapterVersesScreen extends React.Component {
   constructor(props) {
     super(props)
    this.state={
-    chapter_number: this.props.route.params.chapter_number,
+    chapter: this.props.route.params.chapter,
     ayat:[],
     offset:0,
     page:1,
@@ -39,7 +40,7 @@ class ChapterVersesScreen extends React.Component {
   }
 
   loadChapterVerses =()=>{
-    this.props.onGetChapterVeres(this.state.chapter_number, this.state.offset,this.state.page).then(quran=>{
+    this.props.onGetChapterVeres(this.state.chapter.chapter_number, this.state.offset,this.state.page).then(quran=>{
       this.setState({refreshing: false})
       if(!!quran && quran.verses && quran.verses.length>0){
         this.setState(prevState=>{
@@ -51,14 +52,19 @@ class ChapterVersesScreen extends React.Component {
     })
   }
 
+  getVerseTafsers =(ayah)=>{
+    this.props.onGetVerseTafsir(this.state.chapter.chapter_number, ayah.verseNum).then((tafsirs)=>{
+      this.props.navigation.navigate("Tafsers", {tafsirs: tafsirs, verse: ayah, title: "  تفسير اّية رقم " + ayah.verseNum + "من سورة " + this.state.chapter.name_arabic})
+    })
+  }
+
 
   renderVerse=({item})=>{
     return(
       <AyahComponent 
         ayah= {item}  
         navigation={this.props.navigation}
-        getTafsir= {()=> this.props.onGetVerseTafsir(this.state.chapter_number, item.verseNum)}
-      
+        getTafsers= {()=> this.getVerseTafsers(item)}
       />
     )
   }
@@ -86,7 +92,8 @@ class ChapterVersesScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={{flex:1}}>
+        {this.state.chapter.bismillah_pre && <Text style={styles.bismiallahStyle}>&#xfd3f; بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ &#xfd3e;</Text>}
         {this.state.ayat.length>0 ? <FlatList
           ref={(ref) => { this.flatListRef = ref; }}
           // refreshControl={
@@ -116,6 +123,18 @@ class ChapterVersesScreen extends React.Component {
     );
   }
 }
+
+const styles= StyleSheet.create({
+  bismiallahStyle:{
+    textAlign: 'center',
+    paddingVertical: 10,
+   // paddingRight: 10,
+    fontSize: 30,
+    fontFamily: FontType.arabic,
+    lineHeight: 50,
+    color: colors.primary
+  }
+})
 
 const mapStateToProps = (state) => {
   return{

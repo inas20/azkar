@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { SafeAreaView } from 'react-native';
 import {FlatList, Text, View} from 'react-native';
 import { connect } from 'react-redux';
 import { TafsirCard } from '../components/tafsirCard';
@@ -20,15 +21,16 @@ class TafsersScreen extends React.Component {
       )
   }
 
+
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text style={{fontFamily: FontType.arabic, fontSize:25, textAlign:'center'}}>"  {this.state.verse.text}  "</Text>
-        {this.state.tafsers.length > 0 ?<FlatList
+      <SafeAreaView style={{flex:1}}>
+        <Text style={{fontFamily: FontType.arabic, fontSize:25, textAlign:'center', paddingHorizontal:7}}>&#xfd3f; {this.state.verse.text} &#xfd3e;</Text>
+        {this.state.tafsers.length > 0 ? <FlatList
             data={this.state.tafsers}
             renderItem={this.renderTafserCard}
         />: <Text style={{fontFamily: FontType.arabic, fontSize:30, textAlign: 'center'}}>لا يوجد تفسيرات متاحة</Text>}
-      </View>
+      </SafeAreaView>
     );
   }
 }
