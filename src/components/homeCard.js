@@ -8,7 +8,10 @@ export const HomeCard =(props)=>{
     return (
         <View style={styles.container}>
             <Text style={{color:colors.dark, padding: 15, fontSize:25}}>{props.title} </Text>
-            <Text style={{color:colors.mediumRed, padding: 15, fontSize:100,  fontFamily: FontType.arabic,textAlign:"center" }}>{props.description} </Text>
+            <Text style={styles.text}>{props.description} </Text>
+            {props.transliation && props.details && <Text style={[styles.text,{fontSize :28, padding: 10, flexWrap:'wrap'}]}>
+                {props.transliation}  : {props.details}
+            </Text>}
             <View style={{alignItems:'center', justifyContent:"center"}}>
             <TouchableOpacity style={styles.roundedCircle}>
                 <MaterialIcons name="keyboard-arrow-left" size={50}/>
@@ -36,6 +39,13 @@ const styles= StyleSheet.create({
         elevation: 8,
         shadowOpacity: 0.3,
         shadowRadius: 50,
+    },
+    text:{
+        color:colors.mediumRed, 
+        padding: 15, 
+        fontSize:100,  
+        fontFamily: FontType.arabic,
+        textAlign:"center" 
     }
 })
    
