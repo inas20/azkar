@@ -1,8 +1,13 @@
 import * as React from 'react';
-import {Share, View, StyleSheet, FlatList} from 'react-native';
+import {Share, View, StyleSheet, FlatList,  UIManager,Platform, LayoutAnimation} from 'react-native';
 import { v4 as uuidv4 } from 'uuid';
 import { ZekrCard } from '../components/zekrComponent';
 import AZKAR from '../DataSet/azkar.json';
+
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental &&
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default class AzkarScreen extends React.Component {
   constructor(props) {
@@ -29,6 +34,7 @@ export default class AzkarScreen extends React.Component {
     let newAzkar= this.state.azkar.slice();
     let filtered = []
     filtered= newAzkar.filter(zekr=>zekr.id !=item.id) 
+    this.setAnimation();
     this.setState({azkar: filtered})
   }
 
@@ -50,6 +56,25 @@ export default class AzkarScreen extends React.Component {
     } catch (error) {
       alert(error.message);
     }
+  };
+  
+
+  setAnimation = () => {
+    LayoutAnimation.configureNext({
+      duration: 250,
+      update: {
+        type: LayoutAnimation.Types.spring,
+        springDamping: 0.7,
+      },
+    });
+    LayoutAnimation.configureNext({
+      duration: 500,
+      create: {
+        type: LayoutAnimation.Types.easeOut,
+        property: LayoutAnimation.Properties.scaleXY,
+        springDamping: 0.7,
+      },
+    });
   };
   
 

@@ -1,5 +1,5 @@
 import React, {useState}from 'react';
-import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet, Animated} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const ZekrCard = (props) => {
@@ -16,7 +16,7 @@ const ZekrCard = (props) => {
   }
 
   return(
-  <View style={styles.container} >
+  <Animated.View style={styles.container} >
     <TouchableOpacity onPress={()=> changeZekrCount()}>
       <View style={styles.roundedContainer}>
         <Text style={{textAlign: 'center', padding:25, fontSize:22, flexWrap:'wrap'}}>{zekr?.zekr}</Text>
@@ -34,7 +34,7 @@ const ZekrCard = (props) => {
         <Text style={[styles.text,{paddingLeft:6}]}>التكرار</Text>
       </View>
     </View>
-  </View>
+  </Animated.View>
   )
 };
 
