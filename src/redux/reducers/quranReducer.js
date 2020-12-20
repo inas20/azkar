@@ -1,8 +1,9 @@
-import { GET_CHAPTER_VERSES, GET_QURAN_CHAPTERS } from "../actions/actionTypes";
+import { GET_CHAPTER_VERSES, GET_QURAN_CHAPTERS, CLEAR_CHAPTER_VERSES, IS_PAGE_CHANGED } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
     chapters: [],
     verses:[],
+    isPageChanged: false
   };
   
 export default quranReducer = (state = INITIAL_STATE, action) => {
@@ -16,6 +17,18 @@ export default quranReducer = (state = INITIAL_STATE, action) => {
             return{
                 ...state,
                 verses: [...state.verses, ...action.verses]
+            }
+
+        case CLEAR_CHAPTER_VERSES:
+            return{
+                ...state,
+                verses: []
+            }
+
+        case IS_PAGE_CHANGED:
+            return{
+                ...state,
+                isPageChanged: action.isPageChanged
             }
            
             // const {
