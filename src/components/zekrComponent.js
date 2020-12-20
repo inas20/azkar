@@ -1,6 +1,7 @@
 import React, {useState}from 'react';
-import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet, Animated} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { colors } from '../constants/colors';
 
 const ZekrCard = (props) => {
   const zekr = props.zekr;
@@ -16,7 +17,7 @@ const ZekrCard = (props) => {
   }
 
   return(
-  <View style={styles.container} >
+  <Animated.View style={styles.container} >
     <TouchableOpacity onPress={()=> changeZekrCount()}>
       <View style={styles.roundedContainer}>
         <Text style={{textAlign: 'center', padding:25, fontSize:22, flexWrap:'wrap'}}>{zekr?.zekr}</Text>
@@ -28,13 +29,13 @@ const ZekrCard = (props) => {
         <Text style={[styles.text,{paddingLeft:6}]}>المشاركة</Text>
       </TouchableOpacity>
       <View style={{flexDirection:'row'}}>
-        <View style={{borderRadius: 30, paddingHorizontal: 10, backgroundColor:'#fff'}}> 
-          <Text style={[styles.text,{color: '#000', fontWeight:'normal', fontSize:20, textAlign:'center'}]}>{zekrCount}</Text>
+        <View style={{borderRadius: 30, paddingHorizontal: 10, backgroundColor:'#fff', paddingVertical:3}}> 
+          <Text style={[styles.text,{color: colors.grey, fontWeight:'normal', fontSize:18, textAlign:'center'}]}>{zekrCount}</Text>
         </View>
         <Text style={[styles.text,{paddingLeft:6}]}>التكرار</Text>
       </View>
     </View>
-  </View>
+  </Animated.View>
   )
 };
 
