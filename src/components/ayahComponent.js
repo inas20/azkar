@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
+import React from 'react';
+import {Text, View, StyleSheet} from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
 
@@ -8,28 +8,28 @@ import { FontType } from '../constants/fonts';
 
 export const AyahComponent =(props)=>{
     const ayah = props.ayah;  
-    return(
-        <TouchableNativeFeedback 
-            style={styles.container} 
-            onPress={()=> props.getTafsers()}
-            >
-            <View style={styles.cardStyle}>
-                <View style={styles.cardContainer}>
-                    <MaterialIcons name="keyboard-arrow-left" size={45} style={{paddingTop:15}} color={colors.lightBlue}/>
-                    <View style={styles.ayahContainer}>
-                        <Text style={styles.text}>
-                            {ayah.text} 
-                            <Text>&#x6dd;</Text>
-                            {ayah.sajdah && <Text style={[styles.text, {paddingRight:3}]}>&#x6e9;</Text>}
-                        </Text>
-                    </View>
-                    <View style={styles.ayahNumContainer}>
-                        <Text style={styles.ayahNum}>{ayah.verseNum}</Text>
+        return(
+            <TouchableNativeFeedback 
+                style={styles.container} 
+                onPress={()=> props.getTafsers()}
+                >
+                <View style={styles.cardStyle}>
+                    <View style={styles.cardContainer}>
+                        <MaterialIcons name="keyboard-arrow-left" size={45} style={{paddingTop:15}} color={colors.lightBlue}/>
+                        <View style={styles.ayahContainer}>
+                            <Text style={styles.text}>
+                                {ayah.text} 
+                                <Text>&#x6dd;</Text>
+                                {ayah.sajdah && <Text style={[styles.text, {paddingRight:3}]}>&#x6e9;</Text>}
+                            </Text>
+                        </View>
+                        <View style={styles.ayahNumContainer}>
+                            <Text style={styles.ayahNum}>{ayah.verseNum}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </TouchableNativeFeedback>
-    )
+            </TouchableNativeFeedback>
+        )
 }
 
 const styles=StyleSheet.create({

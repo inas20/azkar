@@ -1,5 +1,5 @@
 import { config } from "../../constants/config";
-import { GET_CHAPTER_VERSES, GET_QURAN_CHAPTERS } from "./actionTypes";
+import { CLEAR_CHAPTER_VERSES, GET_CHAPTER_VERSES, GET_QURAN_CHAPTERS, IS_PAGE_CHANGED } from "./actionTypes";
 import { uiStartLoading, uiStopLoading } from "./ui";
 
 const baseUrl = config.baseUrl;
@@ -28,13 +28,13 @@ export const getChapterVerses = (chapterNum, offset , page)=>{
     return async(dispatch) =>{
         dispatch(uiStartLoading());
         try {
-            const chunk =[]
-            const url = baseUrl+chapterNum +'/verses?text_type=words&limit=10&offset='+offset +'&page=' +page;
-            const request = await fetch(url)
-            const verses = await request.json()
+            const chunk = [];
+            const url = baseUrl + chapterNum + '/verses?text_type=words&limit=10&offset=' + offset +'&page=' +  page;
+            const request = await fetch(url);
+            const verses = await request.json();
             if(verses.verses){
                 if(verses.verses.length>0){
-
+                    dispatch(isPageChanged(true))
                     console.log("verses.verses--", verses.verses.length)
                     verses.verses.forEach(verse=>{
                         //console.log("verse--", verse)
@@ -43,12 +43,13 @@ export const getChapterVerses = (chapterNum, offset , page)=>{
                             text: verse.text_madani,
                             sajdah: verse.sajdah,
                             juzNum: verse.juz_number,
-                           
-
                         })
                      })
                      dispatch(uiStopLoading()); 
-                    return dispatch(saveVerses(chunk))
+                    return dispatch(saveVerses(chunk));
+                }else{
+                    dispatch(uiStopLoading()); 
+                    dispatch(isPageChanged(false))
                 }
             }
             dispatch(uiStopLoading()); 
@@ -71,7 +72,6 @@ export const getVerseTafsir = (chapterNum, verseNum)=>{
             const tafsirs = await req.json();
             let tafsers =[]
             if(tafsirs.tafsirs && tafsirs.tafsirs.length>0){
-                //console.log('tafsirs--1-', tafsirs.tafsirs.length)
                 tafsirs.tafsirs.forEach(tafsir=> {
                     //console.log('tafsirs---', tafsir)
                     tafsers.push({
@@ -104,5 +104,18 @@ export const saveVerses =(verses) =>{
     return {
         type :GET_CHAPTER_VERSES,
         verses: verses
+    }
+}
+
+export const clearVerses =() =>{
+    return {
+        type :CLEAR_CHAPTER_VERSES,
+    }
+}
+
+export const isPageChanged =(isPageChanged)=>{
+    return{
+        type: IS_PAGE_CHANGED,
+        isPageChanged: isPageChanged
     }
 }

@@ -5,37 +5,41 @@ import { AyahComponent } from '../components/ayahComponent';
 import { colors } from '../constants/colors';
 import { connect } from 'react-redux';
 import { FontType } from '../constants/fonts';
+import { clearVerses } from '../redux/actions/quranApi';
 
 class ChapterVersesScreen extends React.Component {
   constructor(props) {
     super(props)
-   this.state={
-    chapter: this.props.route.params.chapter,
-    ayat:[],
-    offset:0,
-    page:1,
-    isScrolledMore :false,
-    refreshing: false,
-    tafsers:[],
+    this.state={
+      chapter: this.props.route.params.chapter,
+      ayat:[] ,
+      offset:0,
+      page:1,
+      isScrolledMore :false,
+      refreshing: false,
+      tafsers:[],
    }
+   this.props.onClearVerses();
   }
 
   componentDidMount(){
     this.loadChapterVerses();
   }
 
-  handleMoreVerses=()=>{
+  handleMoreVerses =()=>{
     this.setState({refreshing: true})
-    if(this.state.isScrolledMore){
-      this.setState(prevState=>{
-        return {
-          offset : prevState.offset +10,
-          page :prevState.page +1
-        }
-      },()=>{
-        //this.flatListRef?.scrollToOffset({ animated: false, offset: this.state.offset-1 })
-        this.loadChapterVerses()
-      } )
+    if(this.props.isPageChanged){
+      if(this.state.isScrolledMore ){
+        this.setState(prevState=>{
+          return {
+            offset : prevState.offset +10,
+            page :prevState.page +1
+          }
+        },()=>{
+          //this.flatListRef?.scrollToOffset({ animated: false, offset: this.state.offset-1 })
+          this.loadChapterVerses()
+        })
+      }
     }
   }
 
@@ -45,7 +49,7 @@ class ChapterVersesScreen extends React.Component {
       if(!!quran && quran.verses && quran.verses.length>0){
         this.setState(prevState=>{
           return{
-            ayat : [...prevState.ayat, ...quran.verses]
+            ayat : [ ...this.props.chapterVerses]
           }
         })
       }
@@ -62,6 +66,7 @@ class ChapterVersesScreen extends React.Component {
   renderVerse=({item})=>{
     return(
       <AyahComponent 
+        versesCount={this.state.chapter.verses_count}
         ayah= {item}  
         navigation={this.props.navigation}
         getTafsers= {()=> this.getVerseTafsers(item)}
@@ -89,6 +94,22 @@ class ChapterVersesScreen extends React.Component {
     );
   };
 
+  renderVersesEnd =()=>{
+    if(this.props.isPageChanged){
+      return (<ActivityIndicator
+        color="white"
+        style={{marginLeft: 8}} />)
+    }else{
+      return(
+        <View style={{justifyContent:'center'}}>
+          <Text style={{textAlign:'center', fontSize: 32,color: colors.primary}}>
+            &#xfd3f;صٍـدَّقَْ اٌلِـلِـهٌ اٌلِـعٍَظَِيٌـمِـ &#xfd3e;
+          </Text>
+        </View>
+      )
+    }
+  }
+
 
   render() {
     return (
@@ -111,8 +132,9 @@ class ChapterVersesScreen extends React.Component {
           keyExtractor = { (item,index) => index.toString()}
           extraData= {this.state.ayat}
           onEndReachedThreshold={0.3}
-          scrollsToTop={true}    
+          scrollsToTop={true}
           style={{marginBottom:15}}
+          ListFooterComponent ={this.renderVersesEnd}
           onEndReached={()=> this.setState({isScrolledMore: true},()=> this.handleMoreVerses())}
         />: <View style={{justifyContent:'center'}}>
               <ActivityIndicator
@@ -138,16 +160,16 @@ const styles= StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return{
-      chapterVeres : state.quran.veres,
-
-
+      chapterVerses : state.quran.verses,
+      isPageChanged: state.quran.isPageChanged
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
       onGetChapterVeres: (chapterNum, offset, page) => dispatch(getChapterVerses(chapterNum, offset, page)),
-      onGetVerseTafsir:(chapterNum, verseNum) => dispatch(getVerseTafsir(chapterNum, verseNum))
+      onGetVerseTafsir:(chapterNum, verseNum) => dispatch(getVerseTafsir(chapterNum, verseNum)),
+      onClearVerses:() => dispatch(clearVerses())
   };
 };
 

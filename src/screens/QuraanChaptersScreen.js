@@ -17,7 +17,7 @@ class QuraanChaptersScreen extends React.Component {
   componentDidMount(){
     this.props.onGetChapters().then(res=>{
       if(!!res.chapters && res.chapters.length>0){
-        this.setState({chapters: res.chapters})
+        this.setState({chapters: this.props.chapters})
       }
     })
   }
@@ -56,7 +56,8 @@ class QuraanChaptersScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return{
-    isLoading: state.ui.isLoading
+    isLoading: state.ui.isLoading,
+    chapters: state.quran.chapters
   }
 };
 
