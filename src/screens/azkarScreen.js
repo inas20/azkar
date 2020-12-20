@@ -22,7 +22,7 @@ export default class AzkarScreen extends React.Component {
   }
   
 
-  setupData=()=>{
+  setupData =()=> {
     let azkar = AZKAR;
     azkar.forEach(zekr=>{
       zekr.id= uuidv4()
@@ -79,7 +79,7 @@ export default class AzkarScreen extends React.Component {
   
 
 
-  renderZekrItem=({item})=>{
+  renderZekrItem =({item})=>{
     return(
       <ZekrCard zekr={item}  showZekr={(item)=> this.showZekr(item)} shareZekr={()=> this.onShareZekr(item)}/>
     )
@@ -87,8 +87,8 @@ export default class AzkarScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        {this.state.azkar.length>0 &&<FlatList
+      <View style={styles.container}>
+        {this.state.azkar.length>0 && <FlatList
           data={this.state.azkar}
           renderItem={this.renderZekrItem}
           keyExtractor = { (item,index) => index.toString()}
@@ -101,6 +101,8 @@ export default class AzkarScreen extends React.Component {
 
 const styles= StyleSheet.create({
   container:{
-   // flex: 1
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center'
   }
 })
