@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import { MainStackNavigator, QuraanStackNavigator } from "./StackNavigator";
-import SettingsScreen from '../screens/Settings';
 import ShareScreen from '../screens/ShareScreen';
+import PrayersScreen from '../screens/PrayersScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,19 +18,17 @@ const BottomTabNavigator = () => {
         let iconName;
   
         if (route.name === 'Home') {
-          iconName = focused
-            ? 'home'
-            : 'home-outline';
+          iconName =  'home'
         } else if (route.name === 'Settings') {
           iconName = 'heart'
         }else if (route.name === 'Quraan') {
-          iconName = 'book-open-variant';
-        }else if (route.name === 'Share') {
-          iconName = 'hand-heart';
+          iconName = 'book-open';
+        }else if (route.name === 'Prayer Times') {
+          iconName = 'pray';
         }
   
         // You can return any component that you like here!
-        return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+        return <FontAwesome5 name={iconName} size={size} color={color} />;
       },
       headerStyle: {
         backgroundColor: "#9AC4F8",
@@ -42,11 +40,11 @@ const BottomTabNavigator = () => {
       activeTintColor: 'tomato',
       inactiveTintColor: 'gray',
     }}
-    >
-       <Tab.Screen name="Share" component={ShareScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-      <Tab.Screen name="Quraan" component={QuraanStackNavigator} />
-      <Tab.Screen name="Home" component={MainStackNavigator} />
+    > 
+      <Tab.Screen name = "Share" component={ShareScreen} />
+      <Tab.Screen name = "Prayer Times" component={PrayersScreen} />
+      <Tab.Screen name = "Quraan" component={QuraanStackNavigator} />
+      <Tab.Screen name = "Home" component={MainStackNavigator} />
       
     </Tab.Navigator>
   );

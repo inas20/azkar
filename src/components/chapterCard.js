@@ -11,7 +11,7 @@ export const ChapterCard =(props)=>{
             <View style={{margin: 5, justifyContent:'center', alignItems:'center', flexDirection:'row'}}>
                 <Text style={{fontSize:12}}>{chapter.chapter_number}. </Text>
                 <View style={{marginLeft:12}}>
-                    <Text style={{color : colors.lightBlue}}>{chapter.name_simple} ( {chapter.verses_count}: عدد الايات) </Text>
+                    <Text style={{color : colors.primary}}>{chapter.name_simple} ( {chapter.verses_count}: عدد الايات) </Text>
                     <Text style={{flexWrap:'wrap'}}>{chapter.name_complex} (Verses: {chapter.verses_count})</Text>
                 </View>
             </View>
