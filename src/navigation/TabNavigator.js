@@ -14,13 +14,14 @@ const BottomTabNavigator = () => {
     <Tab.Navigator
     initialRouteName ="Home"
     screenOptions={({ route }) => ({
+      tabBarLabel:() => {return null},
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
   
         if (route.name === 'Home') {
           iconName =  'home'
-        } else if (route.name === 'Settings') {
-          iconName = 'heart'
+        } else if (route.name === 'Share') {
+          iconName = 'praying-hands'
         }else if (route.name === 'Quraan') {
           iconName = 'book-open';
         }else if (route.name === 'Prayer Times') {
@@ -40,6 +41,7 @@ const BottomTabNavigator = () => {
       activeTintColor: 'tomato',
       inactiveTintColor: 'gray',
     }}
+    
     > 
       <Tab.Screen name = "Share" component={ShareScreen} />
       <Tab.Screen name = "Prayer Times" component={PrayersScreen} />
