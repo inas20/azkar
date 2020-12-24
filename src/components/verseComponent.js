@@ -6,33 +6,22 @@ import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '../constants/colors';
 import { FontType } from '../constants/fonts';
 
-export const AyahComponent =(props)=>{
+export const VerseComponent =(props)=>{
     const ayah = props.ayah;  
         return(
-            <TouchableNativeFeedback 
-                style={styles.container} 
-                onPress={()=> props.getTafsers()}>
-                <View style={styles.cardStyle}>
-                    <View style={styles.cardContainer}>
-                        <MaterialIcons name="keyboard-arrow-left" size={45} style={{paddingTop:15}} color={colors.lightBlue}/>
-                        <View style={styles.ayahContainer}>
-                            <Text style={styles.text}>
-                                {ayah.text} 
-                                <Text>&#x6dd;</Text>
-                                {ayah.sajdah && <Text style={[styles.text, {paddingRight:3}]}>&#x6e9;</Text>}
-                            </Text>
-                        </View>
-                        <View style={styles.ayahNumContainer}>
-                            <Text style={styles.ayahNum}>{ayah.verseNum}</Text>
-                        </View>
-                    </View>
-                </View>
+            <TouchableNativeFeedback  style={styles.container} >
+                <Text style={styles.text}>
+                    {ayah.text} 
+                    <Text style={{flexWrap:'wrap'}}>&#x6dd;</Text>
+                    {ayah.sajdah && <Text style={[styles.text, {paddingRight:3}]}>&#x6e9;</Text>}
+                </Text>
             </TouchableNativeFeedback>
         )
 }
 
 const styles=StyleSheet.create({
     containter:{
+        //flexDirection:'row',
         flexWrap:'wrap'
     },
     cardStyle: {
@@ -62,8 +51,8 @@ const styles=StyleSheet.create({
     },
     text:{
         textAlign: 'right',
-        // paddingTop: 10,
-        // paddingRight: 10,
+        paddingTop: 10,
+        paddingRight: 10,
         fontSize: 27,
         fontFamily: FontType.arabic,
         lineHeight: 50,

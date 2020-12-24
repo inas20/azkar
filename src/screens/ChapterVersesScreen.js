@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Text, View, FlatList, ActivityIndicator, StyleSheet} from 'react-native';
+import { Text, View,ScrollView, FlatList, ActivityIndicator, StyleSheet} from 'react-native';
 import { getChapterVerses, getVerseTafsir } from '../redux/actions/index';
 import { AyahComponent } from '../components/ayahComponent';
+import { VerseComponent } from '../components/verseComponent';
+
 import { colors } from '../constants/colors';
 import { connect } from 'react-redux';
 import { FontType } from '../constants/fonts';
@@ -26,6 +28,7 @@ class ChapterVersesScreen extends React.Component {
     this.loadChapterVerses();
   }
 
+  // handle more verses while scorlling by loading more verses from api
   handleMoreVerses =()=>{
     this.setState({refreshing: true})
     if(this.props.isPageChanged){
@@ -43,6 +46,7 @@ class ChapterVersesScreen extends React.Component {
     }
   }
 
+  // get chapter Verses from api and set the state with response
   loadChapterVerses =()=>{
     this.props.onGetChapterVeres(this.state.chapter.chapter_number, this.state.offset,this.state.page).then(quran=>{
       this.setState({refreshing: false})
@@ -56,6 +60,7 @@ class ChapterVersesScreen extends React.Component {
     })
   }
 
+  // get tafers of verse when pressed
   getVerseTafsers =(ayah)=>{
     this.props.onGetVerseTafsir(this.state.chapter.chapter_number, ayah.verseNum).then((tafsirs)=>{
       this.props.navigation.navigate("Tafsers", {tafsirs: tafsirs, verse: ayah, title: "  تفسير اّية رقم " + ayah.verseNum + "من سورة " + this.state.chapter.name_arabic})
@@ -63,14 +68,25 @@ class ChapterVersesScreen extends React.Component {
   }
 
 
-  renderVerse=({item})=>{
+  renderQuranVerses =()=>{
+    return this.state.ayat.map((item, index)=>{
+      return(
+        <VerseComponent
+          key={index}
+          ayah= {item}/>
+      )
+    })
+  }
+
+
+  // render each verse of chapter
+  renderVerse =({item})=>{
     return(
       <AyahComponent 
         versesCount={this.state.chapter.verses_count}
         ayah= {item}  
         navigation={this.props.navigation}
-        getTafsers= {()=> this.getVerseTafsers(item)}
-      />
+        getTafsers= {()=> this.getVerseTafsers(item)}/>
     )
   }
 
@@ -94,6 +110,7 @@ class ChapterVersesScreen extends React.Component {
     );
   };
 
+  // render the end of the chapter after ending scrolling
   renderVersesEnd =()=>{
     if(this.props.isPageChanged){
       return (<ActivityIndicator
@@ -111,11 +128,31 @@ class ChapterVersesScreen extends React.Component {
   }
 
 
+
+
   render() {
     return (
-      <View style={{flex:1}}>
-        {this.state.chapter.bismillah_pre && <Text style={styles.bismiallahStyle}>&#xfd3f; بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ &#xfd3e;</Text>}
-        {this.state.ayat.length>0 ? <FlatList
+      // <View style={{flex:1}}>
+      //   {this.state.chapter.bismillah_pre && <Text style={styles.bismiallahStyle}>&#xfd3f; بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ &#xfd3e;</Text>}
+        // <ScrollView style={{margin:15, flexGrow: 1}} contentContainerStyle={{flexWrap:'wrap-reverse',  flexGrow: 1,}}>
+          <View style={{flexWrap:'wrap', flexDirection:'row', flexShrink:1}}>
+            <Text style={{flexWrap:'wrap', padding:10,flex:1 }}>
+              {
+                 this.state.ayat.map((item, index)=>
+                  (
+                    <VerseComponent
+                      key={index}
+                      ayah= {item}/>
+                  )
+                )
+              }
+              {/* {this.renderQuranVerses()} */}
+              </Text>
+          </View>
+        // </ScrollView>
+        
+      
+        /* {this.state.ayat.length>0 ? <FlatList
           ref={(ref) => { this.flatListRef = ref; }}
           // refreshControl={
           //   <RefreshControl
@@ -133,15 +170,17 @@ class ChapterVersesScreen extends React.Component {
           extraData= {this.state.ayat}
           onEndReachedThreshold={0.3}
           scrollsToTop={true}
-          style={{marginBottom:15}}
+          numOfColumns={4}
+          contentContainerStyle={{margin:15,flexShrink:1}}
+          style={{flexDirection:'row'}}
           ListFooterComponent ={this.renderVersesEnd}
           onEndReached={()=> this.setState({isScrolledMore: true},()=> this.handleMoreVerses())}
         />: <View style={{justifyContent:'center'}}>
               <ActivityIndicator
                 color= {colors.primary}
                 style={{marginLeft: 8}} />
-        </View> }
-      </View>
+        </View> } */
+      // </View>
     );
   }
 }

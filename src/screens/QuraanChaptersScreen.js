@@ -1,12 +1,15 @@
 import * as React from 'react';
-import {Text, View, FlatList, ActivityIndicator} from 'react-native';
+import {Text, View, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { getChapters } from '../redux/actions/index';
 import { ChapterCard } from '../components/chapterCard';
 import { colors } from '../constants/colors';
 
 
 class QuraanChaptersScreen extends React.Component {
+
   constructor(props) {
     super(props)
     this.state={
@@ -15,6 +18,14 @@ class QuraanChaptersScreen extends React.Component {
   }
 
   componentDidMount(){
+    this.props.navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity style={{padding: 15}} onPress={()=> this.props.navigation.navigate("Quran")}> 
+          <Ionicons name="list" size={30} color={colors.white} />
+        </TouchableOpacity>
+      ),
+    })
+    
     this.props.onGetChapters().then(res=>{
       if(!!res.chapters && res.chapters.length>0){
         this.setState({chapters: this.props.chapters})
@@ -64,7 +75,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
       onGetChapters: () => dispatch(getChapters()),
-     
   };
 };
 

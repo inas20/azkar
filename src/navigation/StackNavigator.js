@@ -5,8 +5,11 @@ import HomeScreen from '../screens/Home';
 import AzkarScreen from '../screens/AzkarScreen';
 import QuraanChaptersScreen from '../screens/QuraanChaptersScreen';
 import QuranDisplayScreen from '../screens/ChapterVersesScreen';
-import { colors } from '../constants/colors';
 import TafsersScreen from '../screens/TafsersScreen';
+import QuranScreen from '../screens/QuranScreen';
+
+import { colors } from '../constants/colors';
+
 
 const Stack = createStackNavigator();
 
@@ -45,11 +48,16 @@ const MainStackNavigator = () => {
     return (
       <Stack.Navigator screenOptions={screenOptionStyle}>
         <Stack.Screen name="Quraan" component={QuraanChaptersScreen}  
-          options={{ title: "القران الكريم" }}  />
+          options={({navigation,route})=> ({ title: "القران الكريم" , route: route,  navigation: navigation})}  />
         <Stack.Screen 
           name="Ayat" 
           component={QuranDisplayScreen} 
           options={({ route }) => ({ title:  route.params.title ? route.params.title: "القران الكريم"   })}
+         />
+          <Stack.Screen 
+          name="Quran" 
+          component={QuranScreen} 
+          options={({navigation, route }) => ({ title: "القران الكريم"   })}
          />
         <Stack.Screen 
           name="Tafsers" 
