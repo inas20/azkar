@@ -7,6 +7,7 @@ import QuraanChaptersScreen from '../screens/QuraanChaptersScreen';
 import QuranDisplayScreen from '../screens/ChapterVersesScreen';
 import { colors } from '../constants/colors';
 import TafsersScreen from '../screens/TafsersScreen';
+import QuranPdfScreen from '../screens/QuranPdfScreen';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +52,12 @@ const MainStackNavigator = () => {
           component={QuranDisplayScreen} 
           options={({ route }) => ({ title:  route.params.title ? route.params.title: "القران الكريم"   })}
          />
+         <Stack.Screen 
+          name="QuranPdf" 
+          component={QuranPdfScreen} 
+          options={({ route }) => ({ title:   "القران الكريم"   })}
+         />
+
         <Stack.Screen 
           name="Tafsers" 
           component={TafsersScreen} 
