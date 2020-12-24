@@ -1,6 +1,10 @@
 import * as React from 'react';
-import {Text, View, FlatList, ActivityIndicator} from 'react-native';
+import {Text, View, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+
+
 import { getChapters } from '../redux/actions/index';
 import { ChapterCard } from '../components/chapterCard';
 import { colors } from '../constants/colors';
@@ -10,11 +14,28 @@ class QuraanChaptersScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      chapters:[]
+      chapters:[],
+      isMenuOpened: false
     }
   }
 
   componentDidMount(){
+
+    this.props.navigation.setOptions({
+      headerRight: () => (
+            <TouchableOpacity style={{padding: 15}} onPress={()=> this.showMenu()}> 
+              <Menu
+                ref={this.setMenuRef}
+                button={<Ionicons name="list" size={30} color={colors.white} />} >
+                <MenuItem onPress={()=> {this.hideMenu() ;this.props.navigation.navigate("QuranPdf")}}>المصحف الشريف</MenuItem>
+                <MenuItem onPress={this.hideMenu}>سور و تفسير</MenuItem>
+                <MenuDivider />
+              </Menu>
+            </TouchableOpacity>
+      ),
+    })
+
+    // get quran chapters from api
     this.props.onGetChapters().then(res=>{
       if(!!res.chapters && res.chapters.length>0){
         this.setState({chapters: this.props.chapters})
@@ -22,16 +43,29 @@ class QuraanChaptersScreen extends React.Component {
     })
   }
 
+  setMenuRef = ref => {
+    this._menu = ref;
+  };
+
+  hideMenu = () => {
+    this._menu.hide();
+  };
+
+  showMenu = () => {
+    this._menu.show();
+  };
+
   renderChapterCard=({item})=>{
     return(
       <ChapterCard 
         chapter={item} 
-        openChapter={()=> this.props.navigation.navigate("Ayat",{
+        openChapter ={()=> this.props.navigation.navigate("Ayat",{
           chapter: item,
           title: item.name_arabic
         })}/>
     )
   }
+
 
   render() {
     return (
@@ -47,9 +81,9 @@ class QuraanChaptersScreen extends React.Component {
             <ActivityIndicator
               color= {colors.primary}
               style={{marginLeft: 8}} />
-          </View>
-          }
-      </View>
+          </View>}
+       
+      </View>     
     );
   }
 }

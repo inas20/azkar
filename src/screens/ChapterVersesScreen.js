@@ -23,6 +23,9 @@ class ChapterVersesScreen extends React.Component {
   }
 
   componentDidMount(){
+
+    
+
     this.loadChapterVerses();
   }
 
