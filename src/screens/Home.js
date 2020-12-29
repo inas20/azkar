@@ -14,20 +14,22 @@ export default class HomeScreen extends React.Component {
     return ({
       headerLeft: (<Text>أذكار المسلم</Text>),
       headerRight: null,
-      headerTitle:"أذكار المسلم"
+      headerTitle:" المسلم"
     })
   }
 
   constructor(props) {
     super(props)
     this.state={
-      numberHolder : Math.floor(Math.random() * 100)
+      numberHolder : Math.floor(Math.random() * 100)+1
     }
   }
 
   componentDidMount(){
     this.setState({numberHolder: Math.floor(Math.random() * 100)})
   }
+
+ 
 
   render() {
     return (

@@ -3,8 +3,7 @@ import React,{useState, useEffect} from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import { MainStackNavigator, QuraanStackNavigator } from "./StackNavigator";
-import ShareScreen from '../screens/ShareScreen';
+import { MainStackNavigator, QuraanStackNavigator, ShareStackNavigator } from "./StackNavigator";
 import PrayersScreen from '../screens/PrayersScreen';
 
 const Tab = createBottomTabNavigator();
@@ -45,7 +44,16 @@ const BottomTabNavigator = () => {
       }}
       
       > 
-        <Tab.Screen name = "Share" component={ShareScreen} />
+        <Tab.Screen name = "Share" component={ShareStackNavigator}  options={{
+          title: 'Share',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}/>
         <Tab.Screen name = "Prayer Times" component={PrayersScreen} />
         <Tab.Screen name = "Quraan" component={QuraanStackNavigator} />
         <Tab.Screen name = "Home" component={MainStackNavigator} />
