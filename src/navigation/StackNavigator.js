@@ -8,6 +8,7 @@ import QuranDisplayScreen from '../screens/ChapterVersesScreen';
 import { colors } from '../constants/colors';
 import TafsersScreen from '../screens/TafsersScreen';
 import QuranPdfScreen from '../screens/QuranPdfScreen';
+import ShareScreen from '../screens/ShareScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,12 @@ const MainStackNavigator = () => {
           name="Azkar" 
           component={AzkarScreen} 
           options={({ route }) => ({ title: "أذكار " +  route.params.title })}
+         />
+
+        <Stack.Screen 
+          name="Share" 
+          component={AzkarScreen} 
+          options={({ route }) => ({ title: "صدقة جارية"  })}
          />
   
       </Stack.Navigator>
@@ -67,4 +74,23 @@ const MainStackNavigator = () => {
     );
   }
 
-  export {MainStackNavigator, QuraanStackNavigator};
+  const ShareStackNavigator =()=>{
+    return (
+      <Stack.Navigator screenOptions={screenOptionStyle}>
+      
+        <Stack.Screen 
+          name="Share" 
+          component={ShareScreen} 
+          options={({ route }) => ({ title: "صدقة جارية"  })}
+         />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: ' المسلم' }}
+        />
+  
+      </Stack.Navigator>
+    );
+  }
+
+  export {MainStackNavigator, QuraanStackNavigator, ShareStackNavigator};
