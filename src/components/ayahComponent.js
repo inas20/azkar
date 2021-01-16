@@ -1,21 +1,41 @@
-import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import React,{useState} from 'react';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { colors } from '../constants/colors';
 import { FontType } from '../constants/fonts';
 
 export const AyahComponent =(props)=>{
-    const ayah = props.ayah;  
+    const [selected, setSelected] = useState(false);
+    const [bookmarkIcon, setIcon] = useState("bookmark-outline");
+    const ayah = props.ayah; 
+
+    const onPressBookmark =()=>{
+        //setSelected(!selected)
+        if(!selected){
+            setSelected(true)
+            console.log("icon--2-", bookmarkIcon , selected)
+            setIcon("bookmark")
+        }else{
+            setSelected(false)
+            console.log("icon--1-", bookmarkIcon , selected)
+            setIcon("bookmark-outline")
+        }
+         props.setBookmark(selected)
+    }
+
         return(
-            <TouchableNativeFeedback 
-                style={styles.container} 
-                onPress={()=> props.getTafsers()}
-                >
+            <View  style={styles.container}>
                 <View style={styles.cardStyle}>
                     <View style={styles.cardContainer}>
-                        <MaterialIcons name="keyboard-arrow-left" size={45} style={{paddingTop:15}} color={colors.lightBlue}/>
+                        <TouchableOpacity onPress={()=> props.getTafsers()}>
+                            <MaterialCommunityIcons name="information" size={35} style={{paddingTop:15}} color={colors.grey}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{paddingHorizontal: 8}} onPress={()=> {  onPressBookmark()} }>
+                            <MaterialCommunityIcons name={bookmarkIcon} size={35} style={{paddingTop:15}} color={colors.primary}/>
+                        </TouchableOpacity>
+                       
                         <View style={styles.ayahContainer}>
                             <Text style={styles.text}>
                                 {ayah.text} 
@@ -28,7 +48,7 @@ export const AyahComponent =(props)=>{
                         </View>
                     </View>
                 </View>
-            </TouchableNativeFeedback>
+            </View>
         )
 }
 

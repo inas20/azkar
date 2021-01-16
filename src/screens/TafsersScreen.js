@@ -12,8 +12,13 @@ class TafsersScreen extends React.Component {
         tafsers: this.props.route.params.tafsirs? this.props.route.params.tafsirs:[],
         verse: this.props.route.params.verse ?  this.props.route.params.verse: {}
     }
-    
   }
+
+  componentDidMount(){
+    this.props.navigation.setOptions({
+      headerTitleStyle: {fontSize: 20} 
+    })
+} 
 
   renderTafserCard =({item})=>{
       return(

@@ -6,6 +6,7 @@ import { colors } from '../constants/colors';
 import { connect } from 'react-redux';
 import { FontType } from '../constants/fonts';
 import { clearVerses } from '../redux/actions/quranApi';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class ChapterVersesScreen extends React.Component {
   constructor(props) {
@@ -18,15 +19,16 @@ class ChapterVersesScreen extends React.Component {
       isScrolledMore :false,
       refreshing: false,
       tafsers:[],
+
    }
    this.props.onClearVerses();
   }
 
   componentDidMount(){
-
-    
-
     this.loadChapterVerses();
+   AsyncStorage.getAllKeys().then(res =>{
+     console.log("res===", res)
+   })
   }
 
   handleMoreVerses =()=>{
@@ -61,10 +63,31 @@ class ChapterVersesScreen extends React.Component {
 
   getVerseTafsers =(ayah)=>{
     this.props.onGetVerseTafsir(this.state.chapter.chapter_number, ayah.verseNum).then((tafsirs)=>{
-      this.props.navigation.navigate("Tafsers", {tafsirs: tafsirs, verse: ayah, title: "  تفسير اّية رقم " + ayah.verseNum + "من سورة " + this.state.chapter.name_arabic})
+      this.props.navigation.navigate("Tafsers", {tafsirs: tafsirs, verse: ayah, title: "  تفسير اّية رقم " + ayah.verseNum + " من سورة  " + this.state.chapter.name_arabic})
     })
   }
 
+  setVerseBookmark = async(selected,verse)=>{
+    try {
+      let verseKey ='verse_' + verse.juzNum + this.state.chapter.chapter_number + verse.verseNum
+      if(selected){
+        console.log("verse--1-", selected, verseKey)
+        let selectedVerse ={...verse, key: verseKey}
+        console.log("selectedVerse---", selectedVerse)
+        await AsyncStorage.setItem(verseKey, JSON.stringify(selectedVerse));
+      }else{
+        let ver = await AsyncStorage.getItem(verseKey);
+        console.log("ver---", ver, verseKey)
+        if(ver && ver.key == verseKey){
+          console.log("verse--2-", selected, verseKey)
+          await AsyncStorage.removeItem(verseKey)
+        }
+      }
+     
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   renderVerse=({item})=>{
     return(
@@ -73,6 +96,7 @@ class ChapterVersesScreen extends React.Component {
         ayah= {item}  
         navigation={this.props.navigation}
         getTafsers= {()=> this.getVerseTafsers(item)}
+        setBookmark ={(selected) => this.setVerseBookmark(selected,item)}
       />
     )
   }
